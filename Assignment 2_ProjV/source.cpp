@@ -51,5 +51,17 @@ int main()
     // close file
     inputFile.close();
 
+    // code will run only in debug mode
+#ifdef _DEBUG
+    cout << "DEBUG MODE - Student Information" << endl;
+    cout << "--------------------------------" << endl;
+
+    for (const STUDENT_DATA& student : students)
+    {
+        cout << "First Name: " << student.firstName
+            << ", Last Name: " << student.lastName << endl;
+    }
+#endif
+
     return 0;
 }
