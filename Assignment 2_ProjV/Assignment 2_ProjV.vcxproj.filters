@@ -20,11 +20,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\StudentData.txt">
+    <CopyFileToFolders Include="..\StudentData.txt">
       <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="..\StudentData_Emails.txt">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\StudentData_Emails.txt">
       <Filter>Resource Files</Filter>
-    </Text>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>
