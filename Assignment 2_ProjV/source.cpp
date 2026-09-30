@@ -10,6 +10,10 @@ struct STUDENT_DATA
 {
     string firstName;
     string lastName;
+
+#ifdef PRE_RELEASE
+    string email;
+#endif
 };
 
 int main()
@@ -17,8 +21,16 @@ int main()
 	// vector to store student data
     vector<STUDENT_DATA> students;
 
-    // opens file
+   
+    // select file based on prerelease
+#ifdef PRE_RELEASE
+    cout << "Running PRE-RELEASE version" << endl;
+    ifstream inputFile("StudentData_Emails.txt");
+#else
+    cout << "Running STANDARD version" << endl;
+    //open file
     ifstream inputFile("StudentData.txt");
+#endif
 
 	// checck if file is open
     if (!inputFile.is_open())
@@ -39,11 +51,29 @@ int main()
         {
             STUDENT_DATA student;
 
-            // separate first and last name
+            // Get the first name
             student.firstName = line.substr(0, commaPosition);
-            student.lastName = line.substr(commaPosition + 1);
 
-            // Add student to vector
+#ifdef PRE_RELEASE
+            // find second comma
+            size_t secondComma = line.find(',', commaPosition + 1);
+
+            if (secondComma != string::npos)
+            {
+                student.lastName = line.substr(
+                    commaPosition + 1,
+                    secondComma - commaPosition - 1
+                );
+
+                // get email address
+                student.email = line.substr(secondComma + 1);
+            }
+#else
+           
+            student.lastName = line.substr(commaPosition + 1);
+#endif
+
+            // add to vector
             students.push_back(student);
         }
     }
@@ -53,14 +83,22 @@ int main()
 
     // code will run only in debug mode
 #ifdef _DEBUG
+
     cout << "DEBUG MODE - Student Information" << endl;
     cout << "--------------------------------" << endl;
 
     for (const STUDENT_DATA& student : students)
     {
         cout << "First Name: " << student.firstName
-            << ", Last Name: " << student.lastName << endl;
+            << ", Last Name: " << student.lastName;
+
+#ifdef PRE_RELEASE
+        cout << ", Email: " << student.email;
+#endif
+
+        cout << endl;
     }
+
 #endif
 
     return 0;
