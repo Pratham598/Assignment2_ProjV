@@ -51,8 +51,8 @@ int main()
         {
             STUDENT_DATA student;
 
-            // Get the first name
-            student.firstName = line.substr(0, commaPosition);
+            // Get the last name
+            student.lastName = line.substr(0, commaPosition);
 
 #ifdef PRE_RELEASE
             // find second comma
@@ -60,7 +60,8 @@ int main()
 
             if (secondComma != string::npos)
             {
-                student.lastName = line.substr(
+				// get first name
+                student.firstName = line.substr(
                     commaPosition + 1,
                     secondComma - commaPosition - 1
                 );
@@ -70,7 +71,7 @@ int main()
             }
 #else
            
-            student.lastName = line.substr(commaPosition + 1);
+            student.firstName = line.substr(commaPosition + 1);
 #endif
 
             // add to vector
